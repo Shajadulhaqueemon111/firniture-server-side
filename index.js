@@ -22,9 +22,16 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const cartCollection = client.db("task_manage").collection("createTask");
+    const popularCollection = client.db("task_manage").collection("popular");
     //get function
     app.get("/product", async (req, res) => {
       const cursor = cartCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    //popular collection
+    app.get("/popular", async (req, res) => {
+      const cursor = popularCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
